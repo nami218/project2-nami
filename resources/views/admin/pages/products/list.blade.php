@@ -86,6 +86,16 @@
                         @empty
                             <td colspan="0">Không có sản phẩm</td>
                         @endforelse
+                        @if (session('message'))
+                             {{-- <div class="alert alert-success">{{ session('message') }}</div> --}}
+                             <script>
+                                Swal.fire(
+                                'Good job!',
+                                'You clicked the button!',
+                                'success'
+                                )
+                             </script>
+                        @endif
                     </tbody>
                 </table>
             </div>

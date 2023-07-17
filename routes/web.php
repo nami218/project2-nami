@@ -44,7 +44,12 @@ Route::name('admin.')->group(function(){
 
     Route::post('admin/product/copy', [ProductController::class, 'copy'])->name('product.copy');
 
+    //Get slug
+    Route::post('admin/product/slug', [ProductController::class, 'getSlug'])->name('product.slug');
+
 });
+
+
 
 
 

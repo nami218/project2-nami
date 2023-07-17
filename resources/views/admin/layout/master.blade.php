@@ -36,6 +36,11 @@
         <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
       <!-- Style.css -->
       <link rel="stylesheet" type="text/css" href="{{asset('backend/css/style.css')}}">
+
+     <!-- sweetalert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0/dist/sweetalert2.min.js"></script>
+
 </head>
 
   <body>
@@ -139,6 +144,12 @@
 <!-- custom js -->
 <script type="text/javascript" src="{{ asset('backend/pages/dashboard/custom-dashboard.js') }}"></script>
 <script type="text/javascript" src="{{ asset('backend/js/script.js') }} "></script>
+<!-- Ckeditor -->
+<script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
+<!-- Popup -->
+{{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+
+
 @yield('js-custom')
 </body>
 </html>

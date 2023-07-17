@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -106,9 +107,17 @@ class ProductController extends Controller
         return redirect()->route('admin.product.index')->with('message', 'Khôi phục thành công');
     }
 
+    public function getSlug(Request $request){
+        $slug = Str::slug($request->name);
+        return response()->json(['slug'=> $slug]);
+
+    }
+
     public function copy(string $id)
     {
         //
     }
+
+
 
 }

@@ -34,9 +34,6 @@
                 </div>
                 <div class="card-block">
                     <h4 class="sub-title">Sản phẩm</h4>
-                    @if (session('message'))
-                        <div class="alert alert-success">{{ session('message') }}</div>
-                    @endif
                     {{-- @if ($errors->any())
                         <div>
                             <ul>
@@ -124,7 +121,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Trọng lượng</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="weight" id="weight"
+                                    <input type="number" class="form-control" name="weight" id="weight"
                                     placeholder="Nhập trọng lượng (kg)">
                                     @error('weight')
                                         <div class="alert-danger">{{ $message }}</div>
@@ -181,7 +178,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Mô tả chi tiết</label>
                                         <div class="col-sm-10">
-                                            <textarea rows="5" cols="5" class="form-control" name="description" id="description"
+                                            <textarea rows="10" cols="10" class="form-control" name="description" id="description"
                                             placeholder="Mô tả chi tiết của sản phẩm"></textarea>
                                             @error('description')
                                                 <div class="alert-danger">{{ $message }}</div>
@@ -216,3 +213,44 @@
     </div>
 </div>
 @endsection
+
+@section('js-custom')
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#description' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#specification' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#name').on('keyup', function(){
+            let name = $(this).val();
+            $.ajax({
+                method: 'POST',
+                url: "{{ route('admin.product.slug') }}",
+                data: {
+                    name: name,
+                    _token: "{{ csrf_token()}}"
+                },
+                success: function(res){
+                    $('#slug').val(res.slug);
+             },
+             error: function(res){
+
+             }
+
+            });
+        });
+    });
+</script>
+@endsection
+
