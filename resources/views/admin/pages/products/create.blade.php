@@ -56,7 +56,6 @@
                             </div>
 
                         </div>
-
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">URL thân thiện</label>
                             <div class="col-sm-10">
@@ -153,7 +152,6 @@
                                      @enderror
                                 </div>
                             </div>
-
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Thông số kỹ thuật</label>
                                         <div class="col-sm-10">
@@ -185,7 +183,6 @@
                                             @enderror
                                         </div>
                                     </div>
-
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Trạng thái</label>
                                         <div class="col-sm-10">
@@ -199,7 +196,6 @@
                                              @enderror
                                         </div>
                                     </div>
-
                                     <div class="text-right">
                                         <button type="submit" class="btn waves-effect waves-light btn-grd-primary">Tạo sản phẩm</button>
                                     </div>

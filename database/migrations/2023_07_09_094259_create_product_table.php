@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('product', function (Blueprint $table) {
            $table->id();
            $table->unsignedbigInteger('product_category_id')->nullable();
-           $table->foreign('product_category_id')->references('id')->on('product_category');
+           $table->foreign('product_category_id')->references('id')->on('product_category')->onDelete('cascade');
            $table->string('name',255)->nullable();
            $table->string('sku',255)->nullable();
            $table->string('slug',255)->nullable();

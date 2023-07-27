@@ -49,6 +49,8 @@ Route::name('admin.')->group(function(){
 
 });
 
+require __DIR__.'/productCategory/web.php';
+require __DIR__.'/product/web.php';
 
 
 

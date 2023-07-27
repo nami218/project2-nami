@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
@@ -84,9 +85,41 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $fileName = $request->image_url; // nếu không có ảnh update
+        if($request->hasFile('image_url')){ // kiểm tra xem có file up lên ko
+            $originName= $request->file('image_url')->getClientOriginalName();//lấy tên cũ của ảnh
+            $fileName= pathinfo($originName, PATHINFO_FILENAME); // gắn thêm đường dẫn
+            $extension = $request->file('image_url')->getClientOriginalExtension();// .jpg
+            $fileName = $fileName.'_'.time().'.'.$extension; // thêm time để nó là unique
+            $request->file('image_url')->move(public_path('images'), $fileName); // di chuyển đến folder
+        }
+        //remove old images
+        if(!is_null($product->image_url)&& file_exists("image/".$product->image_url)){
+            unlink("images/".$product->image_url);
+        }
+
+
+        $check = $product->update([
+            'product_category_id' =>  $request->product_category_id,
+            'name' => $request->name,
+            'sku' => $request->sku,
+            'slug' => $request->slug,
+            'price' => $request->price,
+            'discount_price' => $request->discount_price,
+            'short_description' => $request->short_description,
+            'description' => $request->description,
+            'specification' => $request->specification,
+            'qty' => $request->qty,
+            'shipping' => $request->shipping,
+            'weight' => $request->weight,
+            'image_url' => $fileName,
+            'status' => $request->status
+        ]);
+
+        $message = $check ? 'Cập nhật thành công' : 'Cập nhật thất bại';
+        return redirect()->route('admin.product.index')->with('message', $message);
     }
 
     /**

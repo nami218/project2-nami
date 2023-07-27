@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductCategoryRequest;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductCategoryController extends Controller
 {
@@ -14,7 +15,8 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.productCategories.list');
+        $productCategories = ProductCategory::select()->paginate(config('myconfig.item_per_page'));
+        return view('admin.pages.productCategories.list',  compact('productCategories'));
     }
 
     /**
@@ -33,10 +35,10 @@ class ProductCategoryController extends Controller
         $productCategory = ProductCategory::create([
             'name'=> $request->name,
             'slug'=> $request->slug,
-            'status'=> $request->status,
+            'status'=> $request->status
         ]);
         $message = $productCategory ? 'Tạo danh mục sản phẩm thành công' : 'Tạo danh mục sản phẩm thất bại';
-        return redirect()->route('admin.pages.productCategories.list')->with('message', $message);
+        return redirect()->route('admin.product-category.index')->with('message', $message);
     }
 
     /**
@@ -68,6 +70,16 @@ class ProductCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $productCategory = ProductCategory::find($id);
+        $check = $productCategory->delete();
+
+        $message = $check ? 'Xóa thành công' : 'Xóa thất bại';
+        return redirect()->route('admin.product-category.index')->with('message', $message);
+    }
+
+    public function getSlug(Request $request){
+        $slug = Str::slug($request->name);
+        return response()->json(['slug'=> $slug]);
+
     }
 }

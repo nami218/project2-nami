@@ -27,7 +27,11 @@
     <!-- Hover table card start -->
     <div class="card">
         <div class="card-header">
-            <h5>Danh sách sản phẩm</h5>
+            <h5>DANH SÁCH SẢN PHẨM</h5>
+            <div class="text-right">
+                    <a href="{{ route('admin.product.create')}}" class="btn btn-outline-primary">Thêm sản phẩm</a>
+                    <button type="submit" class="btn btn-outline-info">Copy</button>
+            </div>
             <div class="card-header-right">
                 <ul class="list-unstyled card-option">
                     <li><i class="fa fa fa-wrench open-card-option"></i></li>
@@ -65,15 +69,14 @@
                             <td>{{ $product->discount_price}}</td>
                             <td>{{ $product->qty}}</td>
                             <td>
-                                <a class="btn btn-{{ $product->status ? 'success' : 'warning'}}">{{$product->status ? 'Hiện' : 'Ẩn'}}</a>
+                                <a class="btn btn-round  btn-{{ $product->status ? 'success' : 'warning'}}">{{$product->status ? 'Hiện' : 'Ẩn'}}</a>
                             </td>
                             <td>
                                 <form method="POST" action="{{ route('admin.product.destroy', ['product' => $product->id]) }}">
                                     @csrf
                                     @method("DELETE")
-                                    <a href="{{ route('admin.product.copy', ['product' => $product->id]) }}" class="btn btn-info">Sao chép</a>
-                                    <a href="{{ route('admin.product.show', ['product' => $product->id]) }}" class="btn btn-primary">Chỉnh sửa</a>
-                                    <button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-danger">Xóa</button>
+                                    <a href="{{ route('admin.product.show', ['product' => $product->id]) }}" class="btn btn-round  btn-primary">Sửa</a>
+                                    <button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-round  btn-danger">Xóa</button>
                                 </form>
                                 @if($product->trashed())
                                 <form action="{{ route('admin.product.restore', ['product' => $product->id]) }}" method="POST">
@@ -84,14 +87,13 @@
                             </td>
                         </tr>
                         @empty
-                            <td colspan="0">Không có sản phẩm</td>
+                            <td colspan="9">Không có sản phẩm</td>
                         @endforelse
                         @if (session('message'))
-                             {{-- <div class="alert alert-success">{{ session('message') }}</div> --}}
                              <script>
                                 Swal.fire(
-                                'Good job!',
-                                'You clicked the button!',
+                                'Thành công',
+                                'Thêm sản phẩm mới!',
                                 'success'
                                 )
                              </script>
