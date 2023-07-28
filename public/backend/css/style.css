@@ -16458,3 +16458,7 @@ body.dark {
   bottom: 50px;
   opacity: 1;
 }
+
+.img-detail{
+    margin: 5px 100px;
+}

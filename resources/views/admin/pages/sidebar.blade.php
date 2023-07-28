@@ -63,7 +63,7 @@
             <li class="pcoded-hasmenu">
                 <a class="waves-effect waves-dark">
                     <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                    <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Quản lý danh mục SP</span>
+                    <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Danh mục sản phẩm</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
                 <ul class="pcoded-submenu">

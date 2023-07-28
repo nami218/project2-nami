@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -40,9 +41,9 @@ class ProductController extends Controller
             $fileName= pathinfo($originName, PATHINFO_FILENAME); // gắn thêm đường dẫn
             $extension = $request->file('image_url')->getClientOriginalExtension();// .jpg
             $fileName = $fileName.'_'.time().'.'.$extension; // thêm time để nó là unique
-            $request->file('image_url')->move(public_path('images'), $fileName); // di chuyển đến folder
-        }
+            $request->file('image_url')->move(public_path('backend/images/products'), $fileName); // di chuyển đến folder
 
+        }
         $product = Product::create([
             'product_category_id' =>  $request->product_category_id,
             'name' => $request->name,
@@ -57,10 +58,10 @@ class ProductController extends Controller
             'shipping' => $request->shipping,
             'weight' => $request->weight,
             'image_url' => $fileName,
-            'status' => $request->status
+            'status' => $request->status,
         ]);
 
-        $message = $product ? 'Thêm sản phẩm mới thành công' : 'Thêm sản phẩm mới thất bại';
+        $message = $product ? 'success' : 'failed';
         return redirect()->route('admin.product.index')->with('message', $message);
     }
 
@@ -87,19 +88,27 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $fileName = $request->image_url; // nếu không có ảnh update
+        $fileName = $product->image_url; // nếu không có ảnh update
         if($request->hasFile('image_url')){ // kiểm tra xem có file up lên ko
             $originName= $request->file('image_url')->getClientOriginalName();//lấy tên cũ của ảnh
             $fileName= pathinfo($originName, PATHINFO_FILENAME); // gắn thêm đường dẫn
             $extension = $request->file('image_url')->getClientOriginalExtension();// .jpg
             $fileName = $fileName.'_'.time().'.'.$extension; // thêm time để nó là unique
-            $request->file('image_url')->move(public_path('images'), $fileName); // di chuyển đến folder
+            $request->file('image_url')->move(public_path('backend/images'), $fileName); // di chuyển đến folder
+
+            // remove old images
+            if(!is_null($product->image_url) && file_exists("backend/images/".$product->image_url)){
+            unlink("backend/images/".$product->image_url);
         }
-        //remove old images
-        if(!is_null($product->image_url)&& file_exists("image/".$product->image_url)){
-            unlink("images/".$product->image_url);
         }
 
+        // $fileName = $request->image_url;
+        // if($request->hasFile('image_url')){
+        //     $path = $request->file('image_url')->store('public/images');
+        //     return response()->json(['success' => true, 'path' => $path]);
+        // } else{
+        //     return response()->json(['success' => false, 'message' => 'No file uploaded.']);
+        // }
 
         $check = $product->update([
             'product_category_id' =>  $request->product_category_id,
@@ -118,7 +127,7 @@ class ProductController extends Controller
             'status' => $request->status
         ]);
 
-        $message = $check ? 'Cập nhật thành công' : 'Cập nhật thất bại';
+        $message = $check ? 'success' : 'failed';
         return redirect()->route('admin.product.index')->with('message', $message);
     }
 
@@ -129,7 +138,7 @@ class ProductController extends Controller
     {
         $check = $product->delete();
 
-        $message = $check ? 'Xóa thành công' : 'Xóa thất bại';
+        $message = $check ? 'success' : 'failed';
         return redirect()->route('admin.product.index')->with('message', $message);
     }
 

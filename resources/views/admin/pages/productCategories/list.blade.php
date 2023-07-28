@@ -72,14 +72,14 @@
                                     @csrf
                                     @method("DELETE")
                                     <a href="{{ route('admin.product-category.show', ['product_category' => $productCategory->id]) }}" class="btn btn-primary">Sửa</a>
-                                    <button onclick="return confirm('Bạn chắc chắn xóa?')" type="submit" class="btn btn-danger">Xóa</button>
+                                    <button onclick="return confirm('Chắc chắn xóa?')" type="submit" class="btn btn-danger">Xóa</button>
                                 </form>
                             </td>
                         </tr>
                         @empty
                             <td colspan="6">Không có danh mục sản phẩm</td>
                         @endforelse
-                        @if (session('message'))
+                        {{-- @if (session('message'))
                              <script>
                                 Swal.fire(
                                 'Thành công',
@@ -87,7 +87,7 @@
                                 'success'
                                 )
                              </script>
-                        @endif
+                        @endif --}}
                     </tbody>
                 </table>
             </div>

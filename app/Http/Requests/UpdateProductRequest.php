@@ -23,19 +23,19 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name'=> 'required|min:1|max:255|string|unique:product,name,'.$this->id,
-            'slug' => 'required|min:1|max:255|string',
-            'price' => 'required',
-            // 'discount_price' => '',
-            'sku' => 'required',
-            'short_description' => 'required',
-            'description' => 'required',
-            'specification' => 'required',
-            'qty' => 'required',
-            'shipping' => 'required',
-            'weight' => 'required|numeric',
-            'image_url' => 'required',
+            'slug' => 'required|alpha_dash',
+            'price' => 'required|min:0|integer|numeric',
+            'discount_price' => 'numeric|integer|lt:price',
+            'sku' => 'required|string|min:1|max:255',
+            'short_description' => 'required|string|min:10',
+            'description' => 'required|string|min:10',
+            'specification' => 'required|string|min:10',
+            'qty' => 'required|numeric|integer|min:1|max:1000000',
+            'shipping' => 'required|string|min:1',
+            'weight' => 'required|numeric|min:0.1|max:1000',
+            'image_url' => 'mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|boolean',
-            'product_category_id' => 'required'
+            'product_category_id' => 'required|exists:product_category,id'
         ];
     }
 }

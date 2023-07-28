@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductCategoryRequest;
+use App\Http\Requests\UpdateProductCategoryRequest;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Psr\Http\Message\UploadedFileFactoryInterface;
 
 class ProductCategoryController extends Controller
 {
@@ -46,7 +48,8 @@ class ProductCategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $productCategory = ProductCategory::where('id', $id)->get();
+        return view('admin.pages.productCategories.detail', ['productCategory' => $productCategory]);
     }
 
     /**
@@ -60,9 +63,17 @@ class ProductCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
     {
-        //
+        $check = $productCategory->update(
+            [
+                'name'=> $request->name,
+                'slug'=> $request->slug,
+                'status'=> $request->status,
+            ]
+        );
+        $message = $check ? 'Cập nhật thành công' : 'Cập nhật thất bại';
+        return redirect()->route('admin.product-category.index')->with('message', $message);
     }
 
     /**

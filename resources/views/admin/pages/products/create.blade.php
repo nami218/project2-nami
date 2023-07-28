@@ -99,26 +99,27 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Mô tả ngắn</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="short_description" id="short_description"
-                                    placeholder="Mô tả ngắn">
-                                    @error('short_description')
+                            <div class="col-sm-10">
+                                <textarea rows="10" class="form-control"
+                                name="short_description" id="short_description"
+                                placeholder="Mô tả ngắn"></textarea>
+                                @error('short_description')
                                     <div class="alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Số lượng</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" name="qty" id="qty"
+                                    placeholder="Nhập số lượng sản phẩm">
+                                    @error('qty')
+                                        <div class="alert-danger">{{ $message }}</div>
                                    @enderror
                                 </div>
                             </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Số lượng</label>
-                            <div class="col-sm-10">
-                                <input type="number" class="form-control" name="qty" id="qty"
-                                placeholder="Nhập số lượng tồn kho">
-                                @error('qty')
-                                <div class="alert-danger">{{ $message }}</div>
-                               @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Trọng lượng</label>
+                            <label class="col-sm-2 col-form-label">Trọng lượng (kg)</label>
                                 <div class="col-sm-10">
                                     <input type="number" class="form-control" name="weight" id="weight"
                                     placeholder="Nhập trọng lượng (kg)">
@@ -127,7 +128,6 @@
                                    @enderror
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Vận chuyển</label>
                                     <div class="col-sm-10">
@@ -155,24 +155,23 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Thông số kỹ thuật</label>
                                         <div class="col-sm-10">
-                                            <textarea rows="5" cols="5" class="form-control"
+                                            <textarea rows="10" class="form-control"
                                             name="specification" id="specification"
                                             placeholder="Nhập thông số kỹ thuật"></textarea>
                                             @error('specification')
                                                 <div class="alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                    </div>
+                                </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Hình ảnh</label>
                                         <div class="col-sm-10">
                                             <input type="file" name="image_url" id="image_url" class="form-control">
                                             @error('image_url')
-                                                <div class="alert-danger">{{ $message }}</div>
+                                                <div style="alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
-
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Mô tả chi tiết</label>
                                         <div class="col-sm-10">
@@ -199,6 +198,15 @@
                                     <div class="text-right">
                                         <button type="submit" class="btn waves-effect waves-light btn-grd-primary">Tạo sản phẩm</button>
                                     </div>
+                                    @if (session('message') == 'success')
+                                        <script>
+                                            swal({
+                                                title: "Good job!",
+                                                text: "You clicked the button!",
+                                                icon: "success",
+                                                });
+                                        </script>
+                                    @endif
                                 </form>
                             </div>
                         </div>
@@ -226,7 +234,16 @@
             console.error( error );
         } );
 </script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#short_description' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
 <script type="text/javascript">
+//slug
     $(document).ready(function(){
         $('#name').on('keyup', function(){
             let name = $(this).val();
@@ -247,6 +264,16 @@
             });
         });
     });
+
+// hien thi nhieu anh
+//     $(document).ready(function(){
+//         $.get('backend/images', function(data) {
+//         $.each(data, function(index, image) {
+//             $('#image-container').append('<img src="' + image.url + '">');
+//         });
+//     });
+// });
+
 </script>
 @endsection
 

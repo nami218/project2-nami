@@ -18,8 +18,8 @@ return new class extends Migration
            $table->string('name',255)->nullable();
            $table->string('sku',255)->nullable();
            $table->string('slug',255)->nullable();
-           $table->float('price')->nullable()->unsigned();
-           $table->float('discount_price')->nullable()->unsigned();
+           $table->decimal('price',10,0)->nullable()->unsigned();
+           $table->decimal('discount_price',10,0)->nullable()->unsigned();
            $table->text('short_description')->nullable();
            $table->text('description')->nullable();
            $table->text('specification')->nullable();

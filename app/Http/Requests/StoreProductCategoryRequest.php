@@ -23,7 +23,7 @@ class StoreProductCategoryRequest extends FormRequest
     {
         return [
             'name'=> 'required|min:1|max:255|string|unique:product_category,name',
-            'slug'=> 'required|min:1|max:255|string',
+            'slug'=> 'required|alpha_dash',
             'status'=> 'required|boolean',
         ];
     }

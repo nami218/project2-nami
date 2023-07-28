@@ -30,7 +30,7 @@
             <!-- Basic Form Inputs card start -->
             <div class="card">
                 <div class="card-header">
-                    <h5>Chỉnh sửa sản phẩm</h5>
+                    <h5>Cập nhật sản phẩm</h5>
                 </div>
                 <div class="card-block">
                     <h4 class="sub-title">Sản phẩm</h4>
@@ -99,17 +99,18 @@
                                @enderror
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Mô tả ngắn</label>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Mô tả ngắn</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="short_description" id="short_description"
-                                    placeholder="Mô tả ngắn" value="{{ $product[0]->short_description }}">
+                                    <textarea rows="10" class="form-control"
+                                    name="short_description" id="short_description"
+                                    >{{ $product[0]->short_description }}</textarea>
                                     @error('short_description')
-                                    <div class="alert-danger">{{ $message }}</div>
-                                   @enderror
+                                        <div class="alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
-                        <div class="form-group row">
+                            <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Số lượng</label>
                             <div class="col-sm-10">
                                 <input type="number" class="form-control" name="qty" id="qty"
@@ -146,7 +147,7 @@
                                     <select name="product_category_id" id="product_category_id" class="form-control">
                                         <option value="">--Chọn danh mục--</option>
                                         @foreach ( $productCategories as $productCategory)
-                                          <option value="{{ $productCategory->id }}">{{ $productCategory->name }}</option>
+                                          <option @if($product[0]->product_category_id === $productCategory->id) selected @endif value="{{ $productCategory->id }}">{{ $productCategory->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('product_category_id')
@@ -168,8 +169,18 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Hình ảnh</label>
                                         <div class="col-sm-10">
-                                            <input type="file" name="image_url" id="image_url" class="form-control"
-                                            value="{{ $product[0]->image_url }}">
+                                            <input multiple type="file" name="image_url" id="image_url" class="form-control">
+                                            @php
+                                              $imageLink = (is_null($product[0]->image_url) || !file_exists("backend/images/products/".$product[0]->image_url)) ? 'default-product-image.jpg' : $product[0]->image_url;
+                                              @endphp
+                                              <div class="img-detail">
+                                                <p>Ảnh đại diện</p>
+                                                @php
+
+                                                @endphp
+                                                <img src="{{ asset('backend/images/products/'.$imageLink) }}" alt="{{ $product[0]->name }}" width="100">
+                                            </div>
+
                                             @error('image_url')
                                                 <div class="alert-danger">{{ $message }}</div>
                                             @enderror
@@ -215,7 +226,7 @@
 @endsection
 
 @section('js-custom')
-
+{{-- textarea cho description va specification --}}
 <script>
     ClassicEditor
         .create( document.querySelector( '#description' ) )
@@ -230,6 +241,15 @@
             console.error( error );
         } );
 </script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#short_description' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
+{{-- slug --}}
 <script type="text/javascript">
     $(document).ready(function(){
         $('#name').on('keyup', function(){
@@ -252,5 +272,35 @@
         });
     });
 </script>
-@endsection
 
+{{-- save image --}}
+{{-- <script type="text/javascript">
+$(document).ready(function() {
+    $('form').on('submit', function(event) {
+        event.preventDefault();
+
+        var formData = new FormData($(this)[0]);
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if (response.success) {
+                    $('#image').attr('src', '{{ asset('') }}' + response.path);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert(xhr.responseText);
+            }
+        });
+    });
+});
+</script> --}}
+
+@endsection

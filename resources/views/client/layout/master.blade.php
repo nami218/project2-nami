@@ -32,6 +32,10 @@
 
    @include('client.pages.footer')
 
+    <!-- Plugin facebook -->
+   <div id="fb-root"></div>
+   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v17.0&appId=1318810208843831&autoLogAppEvents=1" nonce="fKgkMXoF">
+    </script>
     <!-- Js Plugins -->
     <script src="{{ asset('client/js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('client/bootstrap.min.js') }}"></script>
