@@ -111,11 +111,9 @@
     <section class="women-banner spad">
         <div class="container-fluid">
             <div class="row">
-                @foreach ($products as $product )
+
                 <div class="col-lg-3">
-                    @php
-                            $imageLink = (is_null($product->image_url) || !file_exists("images/" . $product->image_url)) ? 'default-product-image.png' : $product->image_url;
-                        @endphp
+
                     <div class="product-large set-bg" data-setbg="{{ asset('client/img/products/large-draft.jpg') }}">
                         <h2>KHÓA CỔNG</h2>
                         <a href="#">Xem tất cả</a>
@@ -225,7 +223,6 @@
                         </div>
                     </div>
                 </div>
-                @endforeach
             </div>
         </div>
     </section>
