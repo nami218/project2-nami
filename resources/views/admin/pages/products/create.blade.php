@@ -222,19 +222,19 @@
 
 <script>
     ClassicEditor
-        .create( document.querySelector( '#description' ) )
+        .create( document.querySelector( '#description' ), {
+            ckfinder: {
+                uploadUrl: "{{ route('admin.product.image.upload').'?_token='.csrf_token() }}",
+            }
+        })
         .catch( error => {
             console.error( error );
-        } );
-</script>
-<script>
+        });
     ClassicEditor
         .create( document.querySelector( '#specification' ) )
         .catch( error => {
             console.error( error );
         } );
-</script>
-<script>
     ClassicEditor
         .create( document.querySelector( '#short_description' ) )
         .catch( error => {

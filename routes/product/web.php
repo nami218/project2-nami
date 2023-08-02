@@ -16,19 +16,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::name('admin.')->group(function(){
+Route::prefix('admin')->name('admin.')->group(function(){
     // Product
-    Route::resource('admin/product', ProductController::class);
+    Route::resource('product', ProductController::class);
 
-    // Product category
-    Route::resource('admin/product-category', ProductCategoryController::class);
-
-    Route::post('admin/product/copy', [ProductController::class, 'copy'])->name('product.copy');
+    Route::post('product-upload-image',[ProductController::class, 'uploadImage'])->name('product.image.upload');
 
     //Get slug
-    Route::post('admin/product/slug', [ProductController::class, 'getSlug'])->name('product.slug');
-
+    Route::post('product/slug', [ProductController::class, 'getSlug'])
+    ->name('product.slug');
 });
+
 
 
 

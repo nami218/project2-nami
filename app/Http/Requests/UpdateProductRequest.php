@@ -23,10 +23,10 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name'=> 'required|min:1|max:255|string|unique:product,name,'.$this->id,
-            'slug' => 'required|alpha_dash',
+            'slug' => 'required|alpha_dash|unique:product,slug,'.$this->id,
             'price' => 'required|min:0|integer|numeric',
             'discount_price' => 'numeric|integer|lt:price',
-            'sku' => 'required|string|min:1|max:255',
+            'sku' => 'required|string|min:1|max:255|unique:product,sku,'.$this->id,
             'short_description' => 'required|string|min:10',
             'description' => 'required|string|min:10',
             'specification' => 'required|string|min:10',

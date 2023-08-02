@@ -22,11 +22,19 @@
                 <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
                     <div class="filter-widget">
                         <h4 class="fw-title">Danh mục</h4>
-                        <ul class="filter-catagories">
+                        <ul>
+                            @foreach ($productCategories as $productCategory)
+                            <li><a href="{{ route('danhmuc.list', ['slug' => $productCategory->slug]) }}">{{ $productCategory->name }}</a></li>
+                            @endforeach
+                            {{-- <li class="active">Khóa cổng vân tay</li>
+                            <li>Khóa cổng vân tay qua app</li>
+                            <li>Khóa cổng thẻ từ</li> --}}
+                        </ul>
+                        {{-- <ul class="filter-catagories">
                             <li><a href="#">Men</a></li>
                             <li><a href="#">Women</a></li>
                             <li><a href="#">Kids</a></li>
-                        </ul>
+                        </ul> --}}
                     </div>
                     <div class="filter-widget">
                         <h4 class="fw-title">Thương hiệu</h4>

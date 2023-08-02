@@ -2,6 +2,14 @@
 
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\client\AboutUsController;
+use App\Http\Controllers\Client\ClientProductCategoryController;
+use App\Http\Controllers\Client\ClientProductController;
+use App\Http\Controllers\Client\ContactController;
+use App\Http\Controllers\Client\HeaderController;
+use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\Client\InstallationController;
+use App\Http\Controllers\Client\NewsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,18 +25,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Client page
-Route::get('home', function(){
-    return view('client.pages.home');
-})->name('home');
+// Home
+Route::get('home', [HomeController::class,'index'])->name('home');
 
-Route::get('sanpham', function(){
-    return view('client.pages.products.product');
-})->name('sanpham');
+// Gioi thieu
+Route::get('gioithieu', [AboutUsController::class, 'index'])->name('gioithieu');
 
-Route::get('cuahang', function(){
-    return view('client.pages.products.store');
-})->name('cuahang');
+// San pham
+Route::get('sanpham', [ClientProductController::class, 'detail'])->name('sanpham');
+Route::get('cuahang', [ClientProductController::class, 'index'])->name('cuahang');
 
+// Tin tuc
+Route::get('tintuc', [NewsController::class, 'index'])->name('tintuc');
+Route::get('tintuc/{slug}', [NewsController::class, 'detail'])->name('tintuc.slug');
+
+//Cong trinh
+Route::get('congtrinh', [InstallationController::class, 'index'])->name('congtrinh');
+Route::get('congtrinh/{slug}', [InstallationController::class, 'detaul'])->name('congtrinh.slug');
+
+//Lien he
+Route::get('lienhe', [ContactController::class, 'index'])->name('lienhe');
+
+// Dangky - dang nhap
 Route::get('dangki', function(){
     return view('client.pages.register');
 })->name('dangki');
@@ -37,32 +55,13 @@ Route::get('dangnhap', function(){
     return view('client.pages.login');
 })->name('dangnhap');
 
-Route::get('gioithieu', function(){
-    return view('client.pages.aboutus');
-})->name('gioithieu');
-
-Route::get('lienhe', function(){
-    return view('client.pages.contact');
-})->name('lienhe');
 
 Route::get('hotro', function(){
     return view('client.pages.support');
 })->name('hotro');
 
-Route::get('tintuc', function(){
-    return view('client.pages.blogs.blog');
-})->name('tintuc');
-
-Route::get('chitiet-tintuc', function(){
-    return view('client.pages.blogs.blog_details');
-})->name('tintuc_chitiet');
 
 
-Route::get('congtrinh', function(){
-    return view('client.pages.blogs.work');
-})->name('congtrinh');
+Route::get('danhmuc/{slug}', [ClientProductCategoryController::class, 'index'])->name('danhmuc.list');
 
-Route::get('congtrinh-chitiet', function(){
-    return view('client.pages.blogs.work_details');
-})->name('congtrinh_chitiet');
 

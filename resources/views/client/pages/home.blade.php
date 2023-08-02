@@ -39,32 +39,33 @@
 
     <!-- Banner Section Begin -->
     <div class="banner-section spad">
+        {{-- <h2>Top Selling</h2> --}}
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="single-banner">
-                        <img src="{{ asset('client/img/banner-khoa-cong-van-tay-PLUS-RV3.jpg') }}" alt="khóa cửa vân tay" width="570px">
-                        <div class="inner-text">
-                            <h4>KHÓA CỬA VÂN TAY</h4>
-                        </div>
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>TOP SELLING</h2>
                     </div>
                 </div>
-                <div class="col-lg-4">
+            </div>
+            <div class="row">
+                @foreach ($topProducts as $topProduct)
+                <div class="col-lg-3">
                     <div class="single-banner">
-                        <img src="{{ asset('client/img/banner-khoa-cong-van-tay-PLUS-RV3.jpg') }}" alt="khóa cổng vân tay">
+                    @php
+                        $imageLink = (is_null($topProduct->image_url) || !file_exists("backend/images/products/" . $topProduct->image_url))
+                            ? 'default-product-image.png' : $topProduct->image_url;
+                    @endphp
+                        <img src="{{ asset('backend/images/products/'.$imageLink) }}" alt="{{ $topProduct->name }}" width="570px">
                         <div class="inner-text">
-                            <h4>KHÓA CỔNG VÂN TAY</h4>
+                            <h6>{{ $topProduct->category->name }}</h6>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="single-banner">
-                        <img src="{{ asset('client/img/banner-khoa-cong-van-tay-PLUS-RV3.jpg') }}" alt="Cổng trượt tự động">
-                        <div class="inner-text">
-                            <h4>CỔNG TRƯỢT TỰ ĐỘNG</h4>
-                        </div>
+                    <div>
+                        <a href="">{{$topProduct->name}}</a>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -111,117 +112,56 @@
     <section class="women-banner spad">
         <div class="container-fluid">
             <div class="row">
-
                 <div class="col-lg-3">
-
                     <div class="product-large set-bg" data-setbg="{{ asset('client/img/products/large-draft.jpg') }}">
                         <h2>KHÓA CỔNG</h2>
                         <a href="#">Xem tất cả</a>
                     </div>
                 </div>
-
                 <div class="col-lg-8 offset-lg-1">
                     <div class="filter-control">
                         <ul>
-                            <li class="active">Khóa cổng vân tay</li>
-                            <li>Khóa cổng vân tay qua app</li>
-                            <li>Khóa cổng thẻ từ</li>
+                            @foreach ($productCategories->take(3) as $productCategory)
+                            <li><a class="nav-link"
+                                data-toggle="tab"  href="#{{$productCategory->slug}}">{{ $productCategory->name }}</a></li>
+                            @endforeach
                         </ul>
                     </div>
-                    <div class="product-slider owl-carousel">
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <img src="{{ asset('client/img/products/product-draft.jpg') }}" alt="">
-                                <div class="sale">Sale</div>
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
+                    <div class="product-slider owl-carousel" >
+                        <div class="tab-pane">
+                            <div class="product-item">
+                                @foreach($products as $product)
+                                <div class="pi-pic">
+                                    @php
+                                        $imageLink = (is_null($product->image_url) || !file_exists("backend/images/products/" . $product->image_url))
+                                        ? 'default-product-image.png' : $product->image_url;
+                                    @endphp
+                                    <img src="{{ asset('backend/images/products/'.$imageLink) }}" alt="{{ $product->name }}">
+                                    <div class="sale">Sale</div>
+                                    <div class="icon">
+                                        <i class="icon_heart_alt"></i>
+                                    </div>
+                                    <ul>
+                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                    </ul>
                                 </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="pi-text">
-                                <div class="catagory-name">Coat</div>
-                                <a href="#">
-                                    <h5>Pure Pineapple</h5>
-                                </a>
-                                <div class="product-price">
-                                    $14.00
-                                    <span>$35.00</span>
+                                <div class="pi-text">
+                                    <a href="#">
+                                        <h5>{{$product->name}}</h5>
+                                    </a>
+                                    <div class="product-price">
+                                        {{ number_format($product->price,0) }}
+                                        <span> {{ number_format($product->discount_price,0) }}</span>
+                                    </div>
                                 </div>
+                                @endforeach
                             </div>
-                        </div>
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <img src="{{ asset('client/img/products/product-draft.jpg') }}" alt="">
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="pi-text">
-                                <div class="catagory-name">Shoes</div>
-                                <a href="#">
-                                    <h5>Guangzhou sweater</h5>
-                                </a>
-                                <div class="product-price">
-                                    $13.00
-                                    <span>629.99</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <img src="{{ asset('client/img/products/product-draft.jpg') }}" alt="">
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="pi-text">
-                                <div class="catagory-name">Towel</div>
-                                <a href="#">
-                                    <h5>Pure Pineapple</h5>
-                                </a>
-                                <div class="product-price">
-                                    $34.00
-                                    <span>629.99</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item">
-                            <div class="pi-pic">
-                                <img src="{{ asset('client/img/products/product-draft.jpg') }}" alt="">
-                                <div class="icon">
-                                    <i class="icon_heart_alt"></i>
-                                </div>
-                                <ul>
-                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="pi-text">
-                                <div class="catagory-name">Towel</div>
-                                <a href="#">
-                                    <h5>Converse Shoes</h5>
-                                </a>
-                                <div class="product-price">
-                                    $34.00
-                                </div>
-                            </div>
+
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -693,3 +633,29 @@
     </section>
     <!-- Latest Blog Section End -->
 @endsection
+
+{{-- @section('js-client-custom')
+<script>
+    // JavaScript
+    document.addEventListener("DOMContentLoaded", function() {
+      // Lắng nghe sự kiện click trên các thẻ <a> trong danh sách tab
+      var tabLinks = document.querySelectorAll(".nav-link");
+      tabLinks.forEach(function(tabLink) {
+        tabLink.addEventListener("click", function(event) {
+          event.preventDefault();
+          var target = this.getAttribute("href");
+
+          // Ẩn tất cả các tab content
+          var tabContents = document.querySelectorAll(".tab-pane");
+          tabContents.forEach(function(tabContent) {
+            tabContent.classList.remove("active");
+          });
+
+          // Hiển thị tab content tương ứng với thẻ <a> được nhấp vào
+          var targetTabContent = document.querySelector(target);
+          targetTabContent.classList.add("active");
+        });
+      });
+    });
+  </script>
+  @endsection --}}

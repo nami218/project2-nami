@@ -22,6 +22,8 @@
         </div>
     </div>
 </div>
+
+<div id="piechart" style="width: 900px; height: 500px;"></div>
 <!-- Page-header end -->
 <div class="pcoded-inner-content">
     <!-- Main-body start -->
@@ -397,4 +399,23 @@
         <div id="styleSelector"> </div>
     </div>
 </div>
+@endsection
+@section('js-custom')
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = google.visualization.arrayToDataTable(@json($arrayDatas));
+
+      var options = {
+        title: 'Order status'
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+      chart.draw(data, options);
+    }
+  </script>
 @endsection

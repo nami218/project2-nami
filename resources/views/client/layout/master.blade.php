@@ -47,6 +47,10 @@
     <script src="{{ asset('client/js/jquery.slicknav.js') }}"></script>
     <script src="{{ asset('client/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('client/js/main.js') }}"></script>
+    {{-- zalo plugin --}}
+    <div class="zalo-chat-widget" data-oaid="1046031062660786985" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="" data-height=""></div>
+    <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+    @yield('js-client-custom')
 </body>
 
 </html>

@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Client\GoogleController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,24 +33,25 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin page
-Route::get('admin/home', function(){
-    return view('admin.pages.dashboard');
-})->name('admin.home');
+Route::get('admin/home', [DashboardController::class, 'index'])->name('admin.home');
 
-Route::name('admin.')->group(function(){
-    // Product
-    Route::resource('admin/product', ProductController::class);
+// Route::name('admin.')->group(function(){
+//     // Product
+//     Route::resource('admin/product', ProductController::class);
 
-    // Product category
-    Route::resource('admin/product-category', ProductCategoryController::class);
+//     // Product category
+//     Route::resource('admin/product-category', ProductCategoryController::class);
 
-    Route::post('admin/product/copy', [ProductController::class, 'copy'])->name('product.copy');
+//     // Route::post('admin/product/copy', [ProductController::class, 'copy'])->name('product.copy');
 
-    //Get slug
-    Route::post('admin/product/slug', [ProductController::class, 'getSlug'])->name('product.slug');
+//     //Get slug
+//     Route::post('admin/product/slug', [ProductController::class, 'getSlug'])->name('product.slug');
 
-});
+// });
 
+//Google
+Route::get('google/redirect', [GoogleController::class, 'redirect'])->name('google.redirect');
+Route::get('google/callback', [GoogleController::class, 'callback'])->name('google.callback');
 
 require __DIR__.'/productCategory/web.php';
 require __DIR__.'/product/web.php';

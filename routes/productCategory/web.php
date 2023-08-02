@@ -18,14 +18,19 @@ use Illuminate\Support\Facades\Route;
 
 
 // Admin page
-Route::name('admin.')->group(function(){
+Route::prefix('admin')->name('admin.')->group(function(){
 
     // Product category resource
-    Route::resource('admin/product-category', ProductCategoryController::class);
-    // Product categort copy
-    Route::post('admin/product-category/copy', [ProductCategoryController::class, 'copy'])->name('product-category.copy');
+    Route::resource('product-category', ProductCategoryController::class);
 
     //Get slug
-    Route::post('admin/product-category/slug', [ProductCategoryController::class, 'getSlug'])->name('product-category.slug');
+    Route::post('product-category/slug', [ProductCategoryController::class, 'getSlug'])
+    ->name('product-category.slug');
+
+
+
+    // Product categort copy
+    // Route::post('admin/product-category/copy', [ProductCategoryController::class, 'copy'])->name('product-category.copy');
+
 
 });

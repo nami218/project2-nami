@@ -79,15 +79,15 @@
                         @empty
                             <td colspan="6">Không có danh mục sản phẩm</td>
                         @endforelse
-                        {{-- @if (session('message'))
+                        @if (session('message'))
                              <script>
                                 Swal.fire(
-                                'Thành công',
-                                'Thêm danh mục mới!',
+                                'Thông báo',
+                                'Thành công!',
                                 'success'
                                 )
                              </script>
-                        @endif --}}
+                        @endif
                     </tbody>
                 </table>
             </div>

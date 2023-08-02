@@ -21,7 +21,7 @@ class ClientProductController extends Controller
     }
     // public function getProductBySlug(string $slug){
     //     $product = Product::where('slug', $slug)->first();s
-    //     return view('client.pages.products.detail', compact('product'));
+    //     return view('client.pages.products.detail', compact('product'));s
     // }
     public function index(){
         $products = $this->productRepository->getTopProducts();

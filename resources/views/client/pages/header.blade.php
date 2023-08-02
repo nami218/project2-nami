@@ -43,9 +43,9 @@
                 </div>
                 <div class="col-lg-7 col-md-7">
                     <div class="advanced-search">
-                        <button type="button" class="category-btn">Danh mục</button>
+                        <button type="button" class="category-btn">Tìm kiếm</button>
                         <div class="input-group">
-                            <input type="text" placeholder="Tìm kiếm">
+                            <input type="text" placeholder="Bạn cần tìm sản phẩm gì?">
                             <button type="button"><i class="ti-search"></i></button>
                         </div>
                     </div>
@@ -110,23 +110,20 @@
             </div>
         </div>
     </div>
-    <div class="nav-item">
+    <div class="nav-item sticky-top" >
         <div class="container">
             <div class="nav-depart">
                 <div class="depart-btn">
                     <i class="ti-menu"></i>
                     <span>DANH MỤC</span>
                     <ul class="depart-hover">
-                        <li class="active"><a href="#">Khóa cổng thẻ từ</a></li>
-                        <li><a href="#">Khóa cổng vân tay</a></li>
-                        <li><a href="#">Khóa vân tay qua app</a></li>
-                        <li><a href="#">Khóa cổng dùng pin</a></li>
-                        <li><a href="#">Khóa vân tay cửa gỗ</a></li>
-                        <li><a href="#">Khóa vân tay cửa xingfa</a></li>
-                        <li><a href="#">Khóa vân tay cửa kính</a></li>
-                        <li><a href="#">Cổng tự động</a></li>
-                        <li><a href="#">Phụ kiện</a></li>
+                        @foreach ($productCategories as $productCategory)
+                            <li><a href="{{ route('danhmuc.list', ['slug' => $productCategory->slug]) }}">{{ $productCategory->name }}</a></li>
+                        @endforeach
                     </ul>
+
+
+
                 </div>
             </div>
             <nav class="nav-menu mobile-menu">
